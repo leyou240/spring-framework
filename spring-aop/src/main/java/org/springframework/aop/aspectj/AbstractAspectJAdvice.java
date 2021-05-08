@@ -351,15 +351,7 @@ public abstract class AbstractAspectJAdvice implements Advice, AspectJPrecedence
 	}
 
 	private static boolean isVariableName(String name) {
-		if (!Character.isJavaIdentifierStart(name.charAt(0))) {
-			return false;
-		}
-		for (char ch: name.toCharArray()) {
-			if (!Character.isJavaIdentifierPart(ch)) {
-				return false;
-			}
-		}
-		return true;
+		return AspectJProxyUtils.isVariableName(name);
 	}
 
 
@@ -639,7 +631,6 @@ public abstract class AbstractAspectJAdvice implements Advice, AspectJPrecedence
 		}
 		try {
 			ReflectionUtils.makeAccessible(this.aspectJAdviceMethod);
-			// TODO AopUtils.invokeJoinpointUsingReflection
 			return this.aspectJAdviceMethod.invoke(this.aspectInstanceFactory.getAspectInstance(), actualArgs);
 		}
 		catch (IllegalArgumentException ex) {
